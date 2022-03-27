@@ -150,3 +150,14 @@ if [ $RUST_INSTALL_DIESEL -eq 1 ]; then
   cargo install diesel_cli $DIESEL_FLAGS || echo "already installed"
   cp $(which diesel) target/release/
 fi
+
+echo "-----> Installing trunk"
+cargo install --locked trunk || echo "already installed"
+cp $(which trunk) target/release/
+
+# echo "-----> chmod on release script"
+# chmod a+x release-tasks.sh
+
+echo "-----> building frontend"
+rustup target add wasm32-unknown-unknown
+target/release/trunk build frontend/index.html
